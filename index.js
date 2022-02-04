@@ -5,6 +5,11 @@ let wordList = [
     'darts',
     'piano',
     'horse',
+    'hello',
+    'water',
+    'pizza',
+    'sushi',
+    'crabs',
 ]
 let randomIndex = Math.floor(Math.random() * wordList.length)
 let secret = wordList[randomIndex]
@@ -19,7 +24,24 @@ window.addEventListener('keydown', handleKeyDown)
 
 function handleKeyDown(e) {
     let letter = e.key.toLowerCase()
-
+    if (letter === 'enter') {
+        if (currentAttempt < 5) {
+            return
+        }
+        if (!wordList.includes(currentAttempt)) {
+            alert('Not in my thesaurus')
+            return
+        }
+        history.push(currentAttempt)
+        currentAttempt = ''
+    } else if (letter === 'backspace') {
+        currentAttempt = currentAttempt.slice(0, currentAttempt.length - 1)
+    } else if (/[a-z]/.test(letter)) {
+        if (currentAttempt < 5) {
+            currentAttempt += letter
+        }
+    }
+    updateGrid()
 }
 
 function buildGrid() {
