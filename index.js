@@ -8,6 +8,7 @@ function buildGrid() {
         for (let j = 0; j < 5; j++) {
             let cell = document.createElement('div')
             cell.className = 'cell'
+            cell.textContent = ''
             row.appendChild(cell)
         }
         grid.appendChild(row)
@@ -15,5 +16,33 @@ function buildGrid() {
 }
 
 buildGrid()
+
+let wordList = [
+    'patio',
+    'darts',
+    'piano',
+    'horse',
+]
+
+let randomIndex = Math.floor(Math.random() * wordList.length)
+let secret = wordList[randomIndex]
+
+let attempts = []
+let currentAttempt = ''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
