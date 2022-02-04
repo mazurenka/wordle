@@ -2,6 +2,16 @@
 
 let grid = document.getElementById('grid')
 
+let wordList = [
+    'patio',
+    'darts',
+    'piano',
+    'horse',
+]
+
+let randomIndex = Math.floor(Math.random() * wordList.length)
+let secret = wordList[randomIndex]
+
 function buildGrid() {
     for (let i = 0; i < 6; i++) {
         let row = document.createElement('div')
@@ -17,18 +27,40 @@ function buildGrid() {
 
 buildGrid()
 
-let wordList = [
-    'patio',
-    'darts',
-    'piano',
-    'horse',
-]
-
-let randomIndex = Math.floor(Math.random() * wordList.length)
-let secret = wordList[randomIndex]
-
 let attempts = []
 let currentAttempt = ''
+
+let counter = 0
+
+function updateGrid () {
+    let row = grid.firstChild
+    for (let attempt of attempts) {
+        drawPastAttempt(row, attempt)
+        row = row.nextSibling
+        }
+    drawPastAttempt(row, currentAttempt)
+}
+
+function drawPastAttempt(row, attempt) {
+
+}
+
+function drawCurrentAttempt(row, attempt) {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
