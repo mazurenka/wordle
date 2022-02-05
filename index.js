@@ -25,7 +25,7 @@ window.addEventListener('keydown', handleKeyDown)
 function handleKeyDown(e) {
     let letter = e.key.toLowerCase()
     if (letter === 'enter') {
-        if (currentAttempt < 5) {
+        if (currentAttempt.length < 5) {
             return
         }
         if (!wordList.includes(currentAttempt)) {
@@ -37,7 +37,7 @@ function handleKeyDown(e) {
     } else if (letter === 'backspace') {
         currentAttempt = currentAttempt.slice(0, currentAttempt.length - 1)
     } else if (/[a-z]/.test(letter)) {
-        if (currentAttempt < 5) {
+        if (currentAttempt.length < 5) {
             currentAttempt += letter
         }
     }
@@ -56,6 +56,7 @@ function buildGrid() {
         grid.appendChild(row)
     }
 }
+
 
 function updateGrid() {
     let row = grid.firstChild
