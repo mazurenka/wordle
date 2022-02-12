@@ -11,11 +11,82 @@ let wordList = [
     'sushi',
     'crabs',
 ]
-let randomIndex = Math.floor(Math.random() * wordList.length)
-let secret = wordList[randomIndex]
+let secret = wordList[0]
 
 let currentAttempt = ''
 let history = []
+
+function handleKeyDown(e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) {
+        return
+    }
+    handleKey(e.key)
+}
+
+function handleKey(key) {
+    if (history.length === 6) {
+        return
+    }
+    if (isAnimating) {
+        return
+    }
+    let letter = key.toLowerCase()
+    if (letter === 'enter') {
+        if (currentAttempt.length < 5) {
+            return;
+        }
+        if (!wordList.includes(currentAttempt)) {
+            alert('NOT IN MY THESAURUS')
+            return;
+        }
+        if (
+            history.length === 5 &&
+            currentAttempt !== secret
+        ) {
+            alert(secret)
+        }
+        history.push(currentAttempt)
+        currentAttempt = ''
+        updateKeyboard()
+        saveGame()
+        pauseInput()
+    } else if (letter === 'backspace') {
+        currentAttempt = currentAttempt.slice(0, currentAttempt.length - 1)
+    } else if (/^[a-z]$/.test(letter)) {
+        if (currentAttempt.length < 5) {
+            currentAttempt += letter
+            animatePress(currentAttempt.length - 1)
+        }
+    }
+    updateGrid()
+}
+
+let isAnimating = false
+function pauseInput() {
+    if (isAnimating) throw Error('should never happen')
+    isAnimating = true
+    setTimeout( () => {
+        isAnimating = false
+    }, 2000)
+}
+
+function buildGrid() {
+    for (let i = 0; i < 6; i++) {
+        let row = document.createElement('div')
+        for (let j = 0; j < 5; j++) {
+            let cell = document.createElement('div')
+            cell.className = 'cell'
+            cell.textContent = ''
+            row.appendChild(cell)
+        }
+        grid.appendChild(row)
+    }
+}
+
+
+let randomIndex = Math.floor(Math.random() * wordList.length)
+let secret = wordList[randomIndex]
+
 
 let grid = document.getElementById('grid')
 buildGrid()
@@ -23,9 +94,7 @@ updateGrid()
 window.addEventListener('keydown', handleKeyDown)
 
 function handleKeyDown(e) {
-    if (e.ctrlKey || e.metaKey || e.altKey) {
-        return
-    }
+
     let letter = e.key.toLowerCase()
     if (letter === 'enter') {
         if (currentAttempt.length < 5) {
@@ -47,18 +116,7 @@ function handleKeyDown(e) {
     updateGrid()
 }
 
-function buildGrid() {
-    for (let i = 0; i < 6; i++) {
-        let row = document.createElement('div')
-        for (let j = 0; j < 5; j++) {
-            let cell = document.createElement('div')
-            cell.className = 'cell'
-            cell.textContent = ''
-            row.appendChild(cell)
-        }
-        grid.appendChild(row)
-    }
-}
+
 
 
 function updateGrid() {
